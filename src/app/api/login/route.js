@@ -1,34 +1,41 @@
-import { SignJWT } from "jose";
-import { NextResponse } from "next/server";
-import { getJwtSecretKey } from "@/libs/auth";
+import { NextResponse } from 'next/server';
+
+import { getJwtSecretKey } from '@/libs/auth';
+import { SignJWT } from 'jose';
 
 export async function POST(request) {
   const body = await request.json();
 
-  // Make that below if condition as your own backend api call to validate user
-  if (body.username === "admin" && body.password === "admin") {
+  // normlade burda dbye gidilip chek edilir kullanici var mi diye.
+
+  if (body.username === 'admin' && body.password === 'admin') {
+    // genrete token
     const token = await new SignJWT({
       username: body.username,
-      role: "admin", // Set your own roles
+      role: 'admin',
     })
-      .setProtectedHeader({ alg: "HS256" })
+      .setProtectedHeader({ alg: 'HS256' })
       .setIssuedAt()
-      .setExpirationTime("30s") // Set your own expiration time
+      .setExpirationTime('2 hour')
       .sign(getJwtSecretKey());
 
-    const response = NextResponse.json(
-      { success: true },
-      { status: 200, headers: { "content-type": "application/json" } }
-    );
+    //set cookie
 
-    response.cookies.set({
-      name: "token",
-      value: token,
-      path: "/",
+    const response = NextResponse.json({
+      success: true,
+      token,
     });
 
+    response.cookies.set({
+      name: 'token',
+      value: token,
+      path: '/',
+    });
     return response;
+  } else {
+    return NextResponse.json({
+      success: false,
+      message: 'Username or password is wrong!',
+    });
   }
-
-  return NextResponse.json({ success: false });
 }

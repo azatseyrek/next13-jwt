@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 import Link from 'next/link';
 
 import { useAuth } from '@/hooks/useAuth';
@@ -12,13 +10,7 @@ export async function Header() {
       <div>
         <Link href="/">Logo</Link>
       </div>
-      <nav>
-        {auth ? (
-          <Link href="/panel">Panel (Protected Route)</Link>
-        ) : (
-          <Link href="/login">Login</Link>
-        )}
-      </nav>
+      <nav>{auth ? <Link href="/panel">Panel (Protected Route)</Link> : <Link href="/login">Login</Link>}</nav>
     </header>
   );
 }

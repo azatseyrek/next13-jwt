@@ -1,32 +1,35 @@
-"use client";
+'use client';
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function LoginPage() {
   const router = useRouter();
+
   const searchParams = useSearchParams();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const username = formData.get("username");
-    const password = formData.get("password");
 
-    const res = await fetch("/api/login", {
-      method: "POST",
+    const username = formData.get('username');
+    const password = formData.get('password');
+
+    const res = await fetch('/api/login', {
+      method: 'POST',
       body: JSON.stringify({ username, password }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
+
     const { success } = await res.json();
 
     if (success) {
-      const nextUrl = searchParams.get("next");
-      // @see: https://github.com/vercel/next.js/discussions/44149
-      router.push(nextUrl ?? "/");
-      router.refresh();
+      const nextUrl = searchParams.get('nextUrl') ?? '/';
+      router.push(nextUrl);
     } else {
-      // Make your shiny error handling with a great user experience
-      alert("Login failed");
+      alert('Username or password is wrong!');
     }
   };
 

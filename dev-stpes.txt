@@ -1,0 +1,18 @@
+1. Yapimizi kurarken pretier ve eslint ayarlarimizi yaptik
+2. auth islemi yapacagimiz icin bir middleware yapisi kullanacagiz.
+3. Middleware imizi src ile ayni seviyede olusturuyoruz.
+4. Midlewarede auth sayfasina istekte bulunulmus mu ve jwt tokeni valid mi kontrol edecegiz.
+5. Midleware icerisinde hangi sayfalari uygulayacagimiz belirliyoruz.
+                |
+                |
+                |--> export const config = { matcher: ["/login", "/panel/:path*"] };
+    
+6. JwtVerifyToken icin bir kutuphane kullanacagz (jose yada JsonWebToken) icin gerekli kurulumlari yapabilmemiz icin ---libs--- klasoru altinda auth.js adinda bir js belgesi olusturuyoruz.
+
+7. libs
+    |
+    |--> auth.js
+        |
+        |--> verifyJwtToken(token) 
+        |
+        |--> getJwtSecretKey fonksiyonlarini olusturuyoruz. (jose ile olusturuldu bu projede)       
