@@ -1,5 +1,8 @@
-import { useAuth } from "@/hooks/useAuth";
-import Link from "next/link";
+import React, { useState } from 'react';
+
+import Link from 'next/link';
+
+import { useAuth } from '@/hooks/useAuth';
 
 export async function Header() {
   const auth = await useAuth.fromServer();
